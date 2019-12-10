@@ -14,7 +14,7 @@ class CategoryController extends Controller
     public function index()
     {
         //
-        $categorys = Category::with('books')->get();
+        $categorys = Category::with('books')->orderBy('id', 'desc')->get();
         return response()->json([
             "data"=>$categorys,
             "success"=>true
@@ -96,6 +96,7 @@ class CategoryController extends Controller
     public function updateStatus(Request $request, $id)
     {
         //
+        // dd($request->all());
         header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
         header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         $category = Category::find($id);

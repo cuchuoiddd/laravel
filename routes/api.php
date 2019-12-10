@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 Route::resource('users','UserController');
 Route::resource('books','BookController');
 Route::resource('categories','CategoryController');
-Route::put('updateSatusCategory/{id}','CategoryController@updateStatus');
+Route::put('updateStatusCategory/{id}','CategoryController@updateStatus');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
