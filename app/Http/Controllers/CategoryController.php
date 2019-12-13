@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-header('Access-Control-Allow-Origin: *');
 use Illuminate\Http\Request;
 use App\Category;
 class CategoryController extends Controller
@@ -14,13 +13,22 @@ class CategoryController extends Controller
     public function index()
     {
         //
-        $categorys = Category::with('books')->orderBy('id', 'desc')->get();
+        header('Access-Control-Allow-Origin: *');
+
+        $categories = Category::with('books')->orderBy('id')->paginate(2);
         return response()->json([
-            "data"=>$categorys,
+            "data"=>$categories,
             "success"=>true
         ]);
     }
-
+    public function getTotal(){
+        header('Access-Control-Allow-Origin: *');
+        $categories = Category::all();
+        return response()->json([
+            "data"=>count($categories),
+            "success"=>true
+        ]);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -40,6 +48,8 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
+        header('Access-Control-Allow-Origin: *');
+
         header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
         header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         $category = Category::create($request->all());
@@ -58,7 +68,8 @@ class CategoryController extends Controller
     public function show($id)
     {
         //
-        $category = Category::find($id)->with('books')->get();
+        $category = Category::find($id);
+        $category->books;
         return response()->json([
             "data"=>$category,
             "success"=>true
@@ -97,8 +108,8 @@ class CategoryController extends Controller
     {
         //
         // dd($request->all());
-        header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-        header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        header('Access-Control-Allow-Origin: *');
+
         $category = Category::find($id);
         $category->status = $request->status;
         $category->save();

@@ -19,7 +19,7 @@ class CreateBooksTable extends Migration
             $table->string('code')->unique();
             $table->string('description')->nullable();
             $table->string('author')->nullable();
-            $table->tinyInteger('status');
+            $table->tinyInteger('status')->default(1);
             $table->integer('total')->nullable();
             $table->integer('category_id');
             $table->integer('user_id')->nullable();
